@@ -14,11 +14,12 @@ const Tiles = (): null => {
     const tilesRenderer = new TilesRenderer('https://raw.githubusercontent.com/NASA-AMMOS/3DTilesSampleData/master/msl-dingo-gap/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize_tileset.json')
     tilesRenderer.setCamera(camera);
     tilesRenderer.setResolutionFromRenderer(camera, gl);
-    scene.add(tilesRenderer.group);
     tilesRenderer.fetchOptions.mode = 'cors';
     tilesRenderer.lruCache.minSize = 900;
     tilesRenderer.lruCache.maxSize = 1300;
     tilesRenderer.errorTarget = 12;
+
+    scene.add(tilesRenderer.group);
 
     tilesRendererRef.current = tilesRenderer;
 
