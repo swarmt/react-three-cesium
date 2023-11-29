@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Mesh, MeshBasicMaterial, SphereBufferGeometry } from 'three'
+import { Mesh, MeshBasicMaterial, SphereGeometry } from 'three'
 
 export const RayCast: React.FC = () => {
   const { camera, mouse, raycaster, scene } = useThree()
@@ -24,7 +24,7 @@ export const RayCast: React.FC = () => {
     <mesh
       ref={sphereRef}
       position={intersection}
-      args={[new SphereBufferGeometry(0.1, 32, 32), new MeshBasicMaterial({ color: 'orange' })]}
+      args={[new SphereGeometry(0.1, 32, 32), new MeshBasicMaterial({ color: 'orange' })]}
     />
   )
 }

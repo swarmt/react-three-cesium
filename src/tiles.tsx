@@ -1,39 +1,43 @@
-import * as React from 'react'
-import { useEffect, useRef } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
-import { TilesRenderer } from '3d-tiles-renderer'
+import * as React from 'react';
+import { useEffect, useRef } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { TilesRenderer } from '3d-tiles-renderer';
 
 interface TilesProps {
   url: string;
 }
 
 export const Tiles: React.FC<TilesProps> = ({ url }) => {
-  const { camera, gl, scene } = useThree()
-  const tilesRendererRef = useRef<TilesRenderer>()
+  const { camera, gl, scene } = useThree();
+  const tilesRendererRef = useRef<TilesRenderer | null>(null);
 
   useEffect(() => {
-    const tilesRenderer = new TilesRenderer(url)
-    tilesRenderer.setCamera(camera)
-    tilesRenderer.setResolutionFromRenderer(camera, gl)
-    tilesRenderer.fetchOptions.mode = 'cors'
-    tilesRenderer.errorTarget = 12
-    tilesRenderer.group.rotation.set(Math.PI / 2, 0, 0)
+    initialize();
+    return () => cleanup();
+  }, [url, camera, gl, scene]);
 
-    scene.add(tilesRenderer.group)
+  const initialize = () => {
+    const tilesRenderer = new TilesRenderer(url);
+    tilesRenderer.setCamera(camera);
+    tilesRenderer.setResolutionFromRenderer(camera, gl);
+    tilesRenderer.fetchOptions.mode = 'cors';
+    tilesRenderer.errorTarget = 12;
+    tilesRenderer.group.rotation.set(Math.PI / 2, 0, 0);
 
-    tilesRendererRef.current = tilesRenderer
+    scene.add(tilesRenderer.group);
+    tilesRendererRef.current = tilesRenderer;
+  };
 
-    return () => {
-      scene.remove(tilesRenderer.group)
+  const cleanup = () => {
+    if (tilesRendererRef.current) {
+      scene.remove(tilesRendererRef.current.group);
     }
-  }, [url, camera, gl, scene])
+  };
 
   useFrame(() => {
-    if (!tilesRendererRef.current) return
-    const tilesRenderer = tilesRendererRef.current as TilesRenderer
-    camera.updateMatrixWorld()
-    tilesRenderer.update()
-  })
+    tilesRendererRef.current?.update();
+    camera.updateMatrixWorld();
+  });
 
-  return null
-}
+  return null;
+};
