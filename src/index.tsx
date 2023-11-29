@@ -43,6 +43,7 @@ const Tiles: React.FC<TilesProps> = ({ url }) => {
 
 ReactDOM.render(
   <Canvas>
+    <color attach="background" args={['#202025']} />
     <Tiles url="https://raw.githubusercontent.com/NASA-AMMOS/3DTilesSampleData/master/msl-dingo-gap/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize_tileset.json" />
     <OrbitControls />
   </Canvas>,
