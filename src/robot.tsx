@@ -4,6 +4,7 @@ import { useFrame, useLoader, useThree } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Euler, Object3D, Quaternion, Raycaster, Scene, Vector3 } from 'three'
 
+
 const useTerrainAdjustedMovement = (scene: Scene, raycaster: Raycaster) => {
   return (position: Vector3) => {
     const rayPosition = new Vector3()
@@ -38,8 +39,6 @@ export const Robot = () => {
 
   const move = () => {
     const speed = 0.005
-    const turnRate = 0.1
-    const turnChance = 0.5
 
     setPosition(prevPos => {
       const newPos = prevPos.clone().add(new Vector3(
@@ -54,10 +53,6 @@ export const Robot = () => {
 
       return terrainAdjustedPos
     })
-
-    if (Math.random() < turnChance) {
-      setRotation(prevRot => new Euler(0, prevRot.y + (Math.random() - 0.5) * turnRate, 0))
-    }
   }
 
   useFrame(() => {

@@ -17,7 +17,9 @@ ReactDOM.render(
     <fog attach='fog' args={['#a0522d', 10, 50]} />
       <Bvh firstHitOnly enabled={true} />
     <Tiles
-      url='https://raw.githubusercontent.com/NASA-AMMOS/3DTilesSampleData/master/msl-dingo-gap/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize_tileset.json' />
+      url='https://raw.githubusercontent.com/NASA-AMMOS/3DTilesSampleData/master/msl-dingo-gap/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize/0528_0260184_to_s64o256_colorize_tileset.json'
+      showTraversability={false}
+    />
     <OrbitControls />
     <Suspense fallback={<Loader />}>
       <Robot />
